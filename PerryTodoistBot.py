@@ -17,7 +17,7 @@ class TodoistBot:
         self.config.read("config.ini")
 
         # set Telegram bot token
-        bot_token = self.config['telegram']['bot_token']
+        bot_token = self.config['bot_token']
 
         # initiate a Telegram updater instance
         self.updater = Updater(bot_token)
