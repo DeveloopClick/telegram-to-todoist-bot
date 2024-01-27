@@ -2,7 +2,7 @@ import json
 
 def read_data(filename):
     try:
-        with open(f"{filename}.json", 'r') as file:
+        with open(f"./{filename}.json", 'r') as file:
             data = json.load(file)
         return data
     except FileNotFoundError:
