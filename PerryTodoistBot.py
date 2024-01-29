@@ -127,7 +127,7 @@ class TodoistBot:
         is_original_time = self.get_user_preference(user_id)
         time = "Original → Forwarded" if is_original_time else "Original ← Forwarded"
         help_text = "Available commands:\n" \
-                    "/start - start the bot \n" \
+                    "/start - Start the bot \n" \
                     "/set_project - Choose the project to forward to\n" \
                     "/toggle_time - " + time + "\n" \
                                                "/undo - Cancel last task \n" \
