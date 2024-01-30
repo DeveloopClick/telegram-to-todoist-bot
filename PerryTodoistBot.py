@@ -124,8 +124,8 @@ class TodoistBot:
         if not user_id in self.data.keys():  # If skipped /start
             self.start_command(update, context)
 
-        is_original_time = self.get_user_preference(user_id)
-        time = "Original → Forwarded" if is_original_time else "Original ← Forwarded"
+        show_time = self.get_user_preference(user_id)
+        time = "On → Off" if show_time else "On ← Off"
         help_text = "Available commands:\n" \
                     "/start - Start the bot \n" \
                     "/set_project - Choose the project to forward to\n" \

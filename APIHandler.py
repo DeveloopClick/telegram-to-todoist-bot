@@ -12,7 +12,7 @@ class APIHandler:
         project_list = self.api.get_projects()
         return project_list
 
-    def create_task(self, message, project_id, is_original_time):
+    def create_task(self, message, project_id, show_time):
         if message.photo:
             task_content = message.caption or 'Photo Task'
         else:
@@ -20,7 +20,7 @@ class APIHandler:
 
         forward_from = f"{message.forward_from.first_name or ''} {message.forward_from.last_name or ''}"\
             if message.forward_from else ""
-        due_date = self.get_due_date(is_original_time, message)
+        due_date = self.get_due_date(show_time, message) if show_time else ""
 
         task = self.api.add_task(content=task_content,
                                  description=forward_from,
@@ -37,12 +37,8 @@ class APIHandler:
 
         return task
 
-    def get_due_date(self, is_original_time, message):
-        if message.forward_date and is_original_time:
-            date = rfc3339.rfc3339(message.forward_date)
-        else:
-            date = rfc3339.rfc3339(message.date)
-        return date
+    def get_due_date(self, message):
+        return rfc3339.rfc3339(message.date)
 
 
     def delete_task(self, task_id):
