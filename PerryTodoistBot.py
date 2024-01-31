@@ -128,7 +128,7 @@ class TodoistBot:
         time = "On → Off" if show_time else "On ← Off"
         help_text = "Available commands:\n" \
                     "/start - Start the bot \n" \
-                    "/set_project - Choose the project to forward to\n" \
+                    "/set_project - Choose project to forward to\n" \
                     "/toggle_time - " + time + "\n" \
                                                "/undo - Cancel last task \n" \
                                                "/change_token - Change API token \n" \
