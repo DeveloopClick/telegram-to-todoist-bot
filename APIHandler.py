@@ -20,7 +20,7 @@ class APIHandler:
 
         forward_from = f"{message.forward_from.first_name or ''} {message.forward_from.last_name or ''}"\
             if message.forward_from else ""
-        due_date = self.get_due_date(show_time, message) if show_time else ""
+        due_date = self.get_due_date(message) if show_time else ""
 
         task = self.api.add_task(content=task_content,
                                  description=forward_from,
