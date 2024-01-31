@@ -89,8 +89,8 @@ class TodoistBot:
             self.start_command(update, context)
         toggled_preference = not self.get_user_preference(user_id)
         self.set_user_preference(user_id, toggled_preference)
-        time = "according to the original message" if toggled_preference else "according to when it was forwarded"
-        context.bot.send_message(chat_id=chat_id, text="Updated successfully. time is now " + time)
+        time = "according to the time of the sent message" if toggled_preference else "off"
+        context.bot.send_message(chat_id=chat_id, text="Updated successfully. due time is now " + time)
 
     def change_token_command(self, update, context):
         user_id = str(update.effective_user.id)
