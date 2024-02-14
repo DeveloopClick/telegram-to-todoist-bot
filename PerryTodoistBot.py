@@ -148,8 +148,11 @@ class TodoistBot:
             if self.handle_api_token(update, context):
                 self.set_user_next_action(user_id, "")
                 self.set_project_command(update, context)
-        elif update.message.reply_to_message and self.update_due_time_for_last_task(update, context):
-            pass
+        elif update.message.reply_to_message:
+            if not self.update_due_time_for_last_task(update, context):
+                context.bot.send_message(chat_id=update.effective_chat.id,
+                                         text="Failed to update due time.")
+
         else:
             project_id = self.get_user_project_id(user_id)
             is_original_time = self.get_user_preference(user_id)
