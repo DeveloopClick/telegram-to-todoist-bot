@@ -40,6 +40,12 @@ class APIHandler:
     def get_due_date(self, message):
         return rfc3339.rfc3339(message.date)
 
+    def update_task_due_time(self, task_id, time):
+        try:
+            self.api.update_task(task_id=task_id,due_string=time)
+            return True
+        except Exception as error:
+            return False
 
     def delete_task(self, task_id):
         self.api.delete_task(task_id=task_id)

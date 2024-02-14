@@ -1,6 +1,7 @@
 import configparser
 
 import enum
+from datetime import datetime
 
 import Utility
 
@@ -132,7 +133,9 @@ class TodoistBot:
                     "/toggle_time - " + time + "\n" \
                                                "/undo - Cancel last task \n" \
                                                "/change_token - Change API token \n" \
-                                               "/help - List of commands"
+                                               "/help - List of commands \n\n" \
+                                               "NEW! reply on last task with a new due time.\n" \
+                                               "Use time formats and English phrases like \"19:32 next Wednesday\". "
         context.bot.send_message(chat_id=chat_id, text=help_text)
 
     def general_handler(self, update, context):
@@ -145,6 +148,8 @@ class TodoistBot:
             if self.handle_api_token(update, context):
                 self.set_user_next_action(user_id, "")
                 self.set_project_command(update, context)
+        elif update.message.reply_to_message and self.update_due_time_for_last_task(update, context):
+            pass
         else:
             project_id = self.get_user_project_id(user_id)
             is_original_time = self.get_user_preference(user_id)
@@ -268,6 +273,23 @@ class TodoistBot:
         self.all_apis = {}
         for user_id in self.data.keys():
             self.all_apis[user_id] = APIHandler(self.data[user_id].get('token'))
+
+    def update_due_time_for_last_task(self, update, context):
+        user_id = str(update.effective_user.id)
+        if not user_id in self.data.keys():  # If skipped /start
+            self.start_command(update, context)
+
+        task_id = self.get_user_last_task(user_id)
+        if task_id:
+            # Update due time of the task from Todoist
+            user_api = self.all_apis[user_id]
+            if not user_api.update_task_due_time(task_id, update.message.text):
+                return False
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text="Due time was updated successfully.")
+            return True
+        else:
+            return False
 
 
 # Instantiate and run the bot
