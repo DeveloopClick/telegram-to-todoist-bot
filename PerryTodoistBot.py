@@ -131,11 +131,11 @@ class TodoistBot:
                     "/start - Start the bot \n" \
                     "/set_project - Choose project to forward to\n" \
                     "/toggle_time - " + time + "\n" \
-                                               "/undo - Cancel last task \n" \
-                                               "/change_token - Change API token \n" \
-                                               "/help - List of commands \n\n" \
-                                               "NEW! reply on last task with a new due time.\n" \
-                                               "Use time formats and English phrases like \"19:32 next Wednesday\". "
+                    "/undo - Cancel last task \n" \
+                    "/change_token - Change API token \n" \
+                    "/help - List of commands \n\n" \
+                    "NEW! reply on last task with a new due time.\n" \
+                    "Use time formats and English phrases like \"19:32 next Wednesday\". "
         context.bot.send_message(chat_id=chat_id, text=help_text)
 
     def general_handler(self, update, context):
